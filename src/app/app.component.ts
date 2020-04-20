@@ -9,8 +9,14 @@ import { ForexDataService } from './forexdata.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  days: number = 10;
+  sum: number = 0;
+  avg: number = 0;
+  isVolumeIncreased: boolean = false;
+
   title = 'StockAnalyser';
   isFetching: boolean = true;
+  candles = [];
 
   constructor(private historicalDataService: HistoricalDataService,
     private forexDataService: ForexDataService) {
@@ -21,7 +27,7 @@ export class AppComponent {
     this.getHistoricalDataFromService();
   }
 
-   onfetchFXData() {
+  onfetchFXData() {
     this.getFXLiveDataFromService();
   }
   //#endregion
@@ -30,10 +36,26 @@ export class AppComponent {
     this.isFetching = true;
     this.historicalDataService.fetchHistoricalData().subscribe(data => {
       this.isFetching = false;
-      console.log(data);
+      console.log(data);      
+      this.candles = data;
+      this.dovolumneAnalysis(data);
     }, error => {
       console.log(error.message);
     });
+  }
+
+  private dovolumneAnalysis(arrData) {
+    alert('In func');
+    for (let i = 0; i < this.days - 1; i++) {
+      console.log(arrData[i]["5. volume"]);
+      this.sum = this.sum + Number(arrData[i]["5. volume"]);
+    }
+    alert(this.sum);
+    this.avg = Number(this.sum) / Number(this.days);    
+    if (this.avg < Number(arrData[this.days - 1]["5. volume"])){
+      this.isVolumeIncreased = true;
+    }
+     
   }
 
   private getFXLiveDataFromService() {

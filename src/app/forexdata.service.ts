@@ -26,4 +26,20 @@ export class ForexDataService {
                 })
             )
     }
+
+    fetchCryptoCurrencyRate(){
+        return this.http
+            .get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=BTC&to_currency=INR&apikey=FANHHINXKLIQP36B')
+            .pipe(
+                map(responseData => {
+                    const arrCryptoRate = [];
+                    for (const key in responseData) {
+                        if (responseData.hasOwnProperty(key)) {
+                            arrCryptoRate.push({ ...responseData[key], id: key });
+                        }
+                    }
+                    return arrCryptoRate;
+                })
+            )
+    }
 }

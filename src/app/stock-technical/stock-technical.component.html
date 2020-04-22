@@ -1,0 +1,41 @@
+<div class="container">
+    <form #f="ngForm">
+        <div class="row">
+            <div class="col-sm-5">
+                <label for="txtsymbol">Stock Symbol</label>
+                <input type="text" id="txtsymbol" class="form-control" name="symbol" ngModel required>
+            </div>
+            <div class="col-sm-7">
+                <label for="numDays">Days ( {{numDays}} ) </label><br />
+                10&nbsp;<input type="range" id="numDays" name="numDays" min="10" max="100" value="10" step="1"
+                    [(ngModel)]="numDays">&nbsp;100
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-6">
+                <button type="submit" class="btn btn-success" (click)="onStartTechnicalAnalysis()">Start
+                    Analysis</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span *ngIf="isFetchingFromServer">Fetching real time data from servers.....</span>
+                <div *ngIf="isFetchingFromServer" class="spinner-grow spinner-grow-sm"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group">
+                        <h5>Date&nbsp;&nbsp;Open&nbsp;&nbsp;High&nbsp;&nbsp;Low&nbsp;&nbsp;Close&nbsp;&nbsp;Volume </h5>
+                    </li>
+                    <li class="list-group" *ngFor="let candle of arrcandles | slice:0:numDays">
+                        <p>{{candle.id}} {{candle["1. open"]}} {{candle["2. high"]}} {{candle["3. low"]}}
+                            {{candle["4. close"]}} {{candle["5. volume"]}} </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </form>
+</div>

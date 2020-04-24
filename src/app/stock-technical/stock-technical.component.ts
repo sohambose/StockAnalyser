@@ -11,6 +11,7 @@ export class StockTechnicalComponent implements OnInit {
   numDays: number = 10;
   isFetchingFromServer: boolean = false;
   arrcandles = [];
+  isVolumeIncreased: boolean = false;
 
   constructor(private stocktechnicalservice: StockTechnicalService) { }
 
@@ -28,9 +29,7 @@ export class StockTechnicalComponent implements OnInit {
     });
     //----------------------------------------------------------------------
 
-    /* this.stocktechnicalservice.dovolumneAnalysis(this.numDays).subscribe(IsVolIncreased=>{
-
-    }) */
+    this.isVolumeIncreased=this.stocktechnicalservice.dovolumneAnalysis(this.arrcandles,this.numDays);
 
 
   }

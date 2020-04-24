@@ -12,6 +12,7 @@ export class StockTechnicalService {
     constructor(private http: HttpClient) {
     }
 
+    //--Return Candles array from API.
     getHistoricalData() {
         console.log('Data Fetch From Server Started');
         return this.http
@@ -34,16 +35,17 @@ export class StockTechnicalService {
             )
     }
 
-    dovolumneAnalysis(days: number) {
+    dovolumneAnalysis(arrCandles: any[], days: number) {
         alert('In func');
         for (let i = 0; i < days - 1; i++) {
-            console.log(this.arrStockHistoricalData[i]["5. volume"]);
-            this.volume_sum = this.volume_sum + this.arrStockHistoricalData[i]["5. volume"];
+            console.log(arrCandles[i]["5. volume"]);
+            this.volume_sum = Number(this.volume_sum) + Number(arrCandles[i]["5. volume"]);
         }
         alert(this.volume_sum);
         this.volume_avg = Number(this.volume_sum) / Number(days);
-        if (this.volume_avg < Number(this.arrStockHistoricalData[days - 1]["5. volume"])) {
+        if (this.volume_avg < Number(arrCandles[days - 1]["5. volume"])) {
             this.IsVolumeIncreased = true;
         }
+        return this.IsVolumeIncreased;
     }
 }

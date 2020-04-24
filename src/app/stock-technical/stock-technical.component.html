@@ -37,5 +37,12 @@
                 </ul>
             </div>
         </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <p *ngIf="isVolumeIncreased">Volume Increased than {{numDays}} days average</p>
+                <p *ngIf="!isVolumeIncreased">Volume Decreased than {{numDays}} days average</p>
+            </div>
+        </div>
+
     </form>
 </div>
